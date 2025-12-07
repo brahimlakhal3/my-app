@@ -1,41 +1,88 @@
 import React from "react";
+import {UserAuth} from "../context/AuthContext.jsx";
 
 const ProductDialog = ({product, images, onClose}) => {
+
+    const {session} = UserAuth()
+    console.log(session)
+
+    const getGridCols = (length) => {
+        switch (length) {
+            case 1:
+                return "grid-cols-1";
+            case 2:
+                return "grid-cols-2";
+            case 3:
+                return "grid-cols-3";
+            case 4:
+                return "grid-cols-2 md:grid-cols-2";
+            case 5:
+                return "grid-cols-3";
+            case 6:
+                return "grid-cols-3";
+            default:
+                return "grid-cols-3";
+        }
+    };
+
+    const heightMap = {
+        1: "h-100",
+        2: "h-90",
+        3: "h-80",
+        4: "h-60",
+        5: "h-50",
+        6: "h-40",
+    };
+
+
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white w-full max-w-3xl rounded-xl overflow-hidden shadow-lg">
                 <div
-                    className={`grid ${images.length === 1 ? 'grid-cols-1' : images.length === 2 ? 'grid-cols-2' : images.length === 3 ? 'grid-cols-3' : images.length === 4 ? 'grid-cols-2 md:grid-cols-2' : 'grid-cols-3'} gap-2 p-4 bg-gray-100 justify-center items-center`}
+                    className={`grid ${getGridCols(images.length)} gap-2 p-4  justify-center items-center`}
                 >
                     {images.map((img, idx) => (
                         <img
                             key={idx}
                             src={img}
                             alt={`product-${idx}`}
-                            className={`${images.length === 1 ? 'h-90' : images.length === 2 ? 'h-100' : images.length === 3 ? 'h-80' : images.length === 4 ? 'h-60' : 'h-40'} object-cover rounded-md mx-auto`}
+                            className={`${heightMap[images.length]} object-cover rounded-md mx-auto`}
                         />
                     ))}
                 </div>
-
-                {/* Partie bas : détails */}
                 <div
-                    className="p-6 flex flex-col md:flex-row md:items-center justify-between bg-white border-t border-gray-200">
+                    className="p-6 flex flex-col md:flex-row md:items-center
+                    justify-between bg-white border-t border-gray-200">
                     <div className="flex-1 space-y-2">
                         <h2 className="text-xl font-bold text-black">{product.title}</h2>
                         <p className="text-gray-700">{product.description}</p>
-                        <p className="text-sm text-gray-500">Numéro: {product.number}</p>
                         <p className="text-lg font-semibold text-black">Prix: {product.price}</p>
-                        <p className="text-gray-600">Nom: {product.name}</p>
+                        <p className="text-gray-600">my name is {product.name + " "}
+                            and that's my number {product.number}</p>
                     </div>
+
                     <button onClick={onClose}
-                            className="m-4 md:mt-0 bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition">
+                            className="m-4 md:mt-0 bg-black text-white px-6
+                            py-2 rounded-md hover:bg-gray-800 transition">
                         Close
                     </button>
 
-                    <button
-                        className="m-4 md:mt-0 bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition">
+                    <a
+                        href={`https://wa.me/212${product.number}?text=${encodeURIComponent(
+                            `Bonjour ${product.name}, je m'appelle ${session.user.user_metadata.full_name} je suis intéressé par ${product.title} dans le site de Sarghini`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="m-4 md:mt-0 bg-black text-white px-6
+               py-2 rounded-md hover:bg-gray-800 transition inline-flex items-center gap-2"
+                    >
                         Acheter
-                    </button>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                  d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
 
                 </div>
             </div>

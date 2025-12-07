@@ -7,7 +7,8 @@ import {RouterProvider} from "react-router-dom";
 
 createRoot(document.getElementById('root')).render(
     <>
-    <AuthContextProvider>
-        <RouterProvider router={router}/>
-    </AuthContextProvider>
-    </>)
+        <AuthContextProvider>
+            <RouterProvider router={router}/>
+        </AuthContextProvider>
+    </>
+)

@@ -4,17 +4,16 @@ import {UserAuth} from "./context/AuthContext.jsx";
 
 const App = () => {
 
-    const {session }=  UserAuth();
+    const {session} = UserAuth();
 
     return (
         <>
-            {session &&  <Navbar/>}
-            <main >
+            {session && <Navbar/>}
+            <main>
                 <Outlet/>
             </main>
         </>
     );
 }
-
 
 export default App;

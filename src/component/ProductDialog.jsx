@@ -69,7 +69,7 @@ const ProductDialog = ({product, images, onClose}) => {
 
                     <a
                         href={`https://wa.me/212${product.number}?text=${encodeURIComponent(
-                            `Bonjour ${product.name}, je m'appelle ${session.user.user_metadata.full_name} je suis intéressé par ${product.title} dans le site de Sarghini`
+                            `Bonjour ${product.name}, je m'appelle ${session.user.user_metadata.full_name} je suis intéressé par ${product.title} dans la platforme de vente et d'achat`
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
